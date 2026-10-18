@@ -108,6 +108,26 @@
             android:layout_marginTop="6dp"
             android:progressTint="@color/accent"
             android:thumbTint="@color/accent" />
+
+        <!-- Look picker: a row of preview boxes (shown instead of the slider for LOOK) -->
+        <HorizontalScrollView
+            android:id="@+id/lookScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="-20dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/lookRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp" />
+        </HorizontalScrollView>
     </LinearLayout>
 
     <!-- Control chips -->

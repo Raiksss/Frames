@@ -41,6 +41,7 @@ import android.view.TextureView
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -69,6 +70,9 @@ class MainActivity : Activity() {
     private lateinit var panelValue: TextView
     private lateinit var panelAuto: TextView
     private lateinit var seek: SeekBar
+    private lateinit var lookScroll: View
+    private lateinit var lookRow: LinearLayout
+    private var lookPreview: Bitmap? = null
     private lateinit var thumb: ImageView
     private lateinit var shutterBtn: View
     private lateinit var modeText: TextView
@@ -147,6 +151,8 @@ class MainActivity : Activity() {
         panelValue = findViewById(R.id.panelValue)
         panelAuto = findViewById(R.id.panelAuto)
         seek = findViewById(R.id.seek)
+        lookScroll = findViewById(R.id.lookScroll)
+        lookRow = findViewById(R.id.lookRow)
         thumb = findViewById(R.id.thumb)
         shutterBtn = findViewById(R.id.shutter)
         modeText = findViewById(R.id.modeText)
@@ -580,8 +586,16 @@ class MainActivity : Activity() {
         }
         activeControl = c
         panel.visibility = View.VISIBLE
-        seek.max = maxFor(c)
-        seek.progress = progressFor(c)
+        if (c == Ctl.LOOK) {
+            seek.visibility = View.GONE
+            lookScroll.visibility = View.VISIBLE
+            buildLookTiles()
+        } else {
+            lookScroll.visibility = View.GONE
+            seek.visibility = View.VISIBLE
+            seek.max = maxFor(c)
+            seek.progress = progressFor(c)
+        }
         refreshUi()
     }
 
@@ -625,11 +639,72 @@ class MainActivity : Activity() {
             Ctl.EV -> evIndex = 0
             Ctl.FOCUS -> focusAuto = true
             Ctl.WB -> wbIndex = 0
-            Ctl.LOOK -> { lookIndex = 0; applyLook() }
+            Ctl.LOOK -> { lookIndex = 0; applyLook(); updateLookTiles() }
         }
-        if (activeControl == c) seek.progress = progressFor(c)
+        if (activeControl == c && c != Ctl.LOOK) seek.progress = progressFor(c)
         refreshUi()
         updatePreview()
+    }
+
+    // ---- Look picker boxes ----
+
+    /** Builds one box per look, each showing the current viewfinder frame in that look. */
+    private fun buildLookTiles() {
+        lookPreview = try { if (texture.isAvailable) texture.getBitmap(150, 200) else null } catch (_: Exception) { null }
+        lookRow.removeAllViews()
+        val d = resources.displayMetrics.density
+        Looks.all.forEachIndexed { i, look ->
+            // a small gap between the basic looks and the 35mm film looks
+            val gap = if (i > 0 && look.film != null && Looks.all[i - 1].film == null) 14 else 0
+            val tile = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = Gravity.CENTER_HORIZONTAL
+                setPadding((4 * d).toInt(), (4 * d).toInt(), (4 * d).toInt(), (6 * d).toInt())
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { marginStart = ((4 + gap) * d).toInt(); marginEnd = (4 * d).toInt() }
+                tag = i
+                setOnClickListener {
+                    lookIndex = i
+                    applyLook()
+                    updateLookTiles()
+                    refreshUi()
+                }
+            }
+            val img = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams((58 * d).toInt(), (76 * d).toInt())
+                scaleType = ImageView.ScaleType.CENTER_CROP
+                clipToOutline = true
+                background = getDrawable(R.drawable.thumb_bg)
+                lookPreview?.let { setImageBitmap(it) }
+                colorFilter = ColorMatrixColorFilter(look.previewMatrix)
+            }
+            val label = TextView(this).apply {
+                text = look.short
+                textSize = 11f
+                setPadding(0, (5 * d).toInt(), 0, 0)
+                gravity = Gravity.CENTER
+                maxLines = 1
+            }
+            tile.addView(img)
+            tile.addView(label)
+            lookRow.addView(tile)
+        }
+        updateLookTiles()
+        // keep the selected box in view
+        lookRow.post {
+            lookRow.getChildAt(lookIndex)?.let { (lookScroll as android.widget.HorizontalScrollView).smoothScrollTo(it.left - (40 * d).toInt(), 0) }
+        }
+    }
+
+    private fun updateLookTiles() {
+        val accent = getColor(R.color.accent)
+        for (k in 0 until lookRow.childCount) {
+            val tile = lookRow.getChildAt(k) as LinearLayout
+            val selected = tile.tag == lookIndex
+            tile.background = getDrawable(if (selected) R.drawable.tile_bg_selected else R.drawable.tile_bg)
+            (tile.getChildAt(1) as TextView).setTextColor(if (selected) accent else 0xFFAAAAAA.toInt())
+        }
     }
 
     private fun applyLook() {
