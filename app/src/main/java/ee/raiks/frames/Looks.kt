@@ -109,7 +109,7 @@ object Looks {
                 red = curve(0f, .06f, .25f, .27f, .5f, .54f, .75f, .79f, 1f, .97f),
                 green = curve(0f, .05f, .25f, .25f, .5f, .52f, .75f, .78f, 1f, .96f),
                 blue = curve(0f, .07f, .25f, .25f, .5f, .49f, .75f, .73f, 1f, .92f),
-                grain = .06f, grainSize = 1.4f, halation = .15f)),
+                grain = 0f, grainSize = 1.4f, halation = .15f)),
 
         // Gold-style: golden warmth, rich yellows and reds, sunny highlights
         Look("35mm Golden 200", "Golden",
@@ -118,7 +118,7 @@ object Looks {
                 red = curve(0f, .04f, .25f, .25f, .5f, .57f, .75f, .85f, 1f, 1f),
                 green = curve(0f, .03f, .25f, .22f, .5f, .53f, .75f, .81f, 1f, .97f),
                 blue = curve(0f, .04f, .25f, .19f, .5f, .45f, .75f, .72f, 1f, .88f),
-                grain = .07f, grainSize = 1.3f, halation = .22f)),
+                grain = 0f, grainSize = 1.3f, halation = .22f)),
 
         // UltraMax-style: punchy consumer film, saturated, warm, visible grain
         Look("35mm Everyday 400", "Everyday",
@@ -127,7 +127,7 @@ object Looks {
                 red = curve(0f, .03f, .25f, .21f, .5f, .54f, .75f, .85f, 1f, 1f),
                 green = curve(0f, .02f, .25f, .2f, .5f, .52f, .75f, .83f, 1f, .99f),
                 blue = curve(0f, .04f, .25f, .19f, .5f, .48f, .75f, .78f, 1f, .94f),
-                grain = .1f, grainSize = 1.7f, halation = .2f)),
+                grain = 0f, grainSize = 1.7f, halation = .2f)),
 
         // Ektar-style: very saturated, deep reds and blues, fine grain, clean whites
         Look("35mm Saturate 100", "Saturate",
@@ -136,7 +136,7 @@ object Looks {
                 red = curve(0f, 0f, .25f, .2f, .5f, .52f, .75f, .84f, 1f, 1f),
                 green = curve(0f, 0f, .25f, .19f, .5f, .5f, .75f, .82f, 1f, 1f),
                 blue = curve(0f, .01f, .25f, .2f, .5f, .51f, .75f, .83f, 1f, 1f),
-                grain = .035f, grainSize = 1.0f, halation = .1f)),
+                grain = 0f, grainSize = 1.0f, halation = .1f)),
 
         // Vision3 500T-style tungsten cinema film: cool cast, teal shadows, strong red halation
         Look("35mm Cine 500T", "500T",
@@ -145,7 +145,7 @@ object Looks {
                 red = curve(0f, .02f, .25f, .22f, .5f, .52f, .75f, .8f, 1f, .97f),
                 green = curve(0f, .05f, .25f, .25f, .5f, .51f, .75f, .77f, 1f, .95f),
                 blue = curve(0f, .1f, .25f, .29f, .5f, .52f, .75f, .76f, 1f, .93f),
-                grain = .09f, grainSize = 1.6f, halation = .8f, halationColor = Color.rgb(255, 45, 25))),
+                grain = 0f, grainSize = 1.6f, halation = .8f, halationColor = Color.rgb(255, 45, 25))),
 
         // Tri-X-style black & white: gritty grain, deep blacks, bright highlights
         Look("35mm Grit 400 B&W", "Grit",
@@ -154,7 +154,7 @@ object Looks {
                 red = curve(0f, .03f, .2f, .12f, .5f, .5f, .8f, .9f, 1f, 1f),
                 green = curve(0f, .03f, .2f, .12f, .5f, .5f, .8f, .9f, 1f, 1f),
                 blue = curve(0f, .03f, .2f, .12f, .5f, .5f, .8f, .9f, 1f, 1f),
-                grain = .16f, grainSize = 1.9f, halation = 0f)),
+                grain = 0f, grainSize = 1.9f, halation = 0f)),
     )
 
     // ---------------------------------------------------------------------------------

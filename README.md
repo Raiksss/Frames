@@ -9,13 +9,13 @@ A pro-style manual camera app (Camera2 API, Kotlin, no third-party libraries).
 - **White balance presets**: Auto, Daylight, Cloudy, Shade, Tungsten, Fluoro
 - **Looks**, previewed live in the viewfinder and baked into the saved JPEG:
   Natural · Classic (warm, soft) · Vivid · Chrome (cool, punchy) · Mono · Mono HC (red-filter B&W)
-- **35mm film looks** inspired by classic Kodak stocks: real tone curves per colour channel, film grain (heaviest in the midtones), red-orange halation around bright lights, vignette and a 3:2 frame like a 35mm negative. Grain dances live in the viewfinder.
+- **35mm film looks** inspired by classic Kodak stocks: real tone curves per colour channel, red-orange halation around bright lights, vignette and a 3:2 frame like a 35mm negative.
   - *Portrait 400* — soft contrast, warm creamy skin, pastel colour
   - *Golden 200* — sunny warmth, rich yellows and reds
-  - *Everyday 400* — punchy, saturated consumer film, visible grain
-  - *Saturate 100* — very saturated, deep reds and blues, fine grain
+  - *Everyday 400* — punchy, saturated consumer film
+  - *Saturate 100* — very saturated, deep reds and blues
   - *Cine 500T* — tungsten cinema film for night: cool cast, strong red glow around lights
-  - *Grit 400 B&W* — gritty grain, deep blacks
+  - *Grit 400 B&W* — high contrast, deep blacks
 - 3:4 viewfinder, rule-of-thirds grid, EXIF data (ISO, shutter, aperture, focal length)
 - Every photo is saved as a JPEG with the chosen look or film applied, straight to your gallery (album **Frames**, folder DCIM/Frames, `FRM_yyyyMMdd_HHmmss.jpg`)
 
